@@ -17,9 +17,6 @@ class Recipe
     #[ORM\Column(length: 255)]
     private ?string $Name = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $Text = null;
-
     #[ORM\Column(length: 255)]
     private ?string $Duration = null;
 
@@ -28,6 +25,9 @@ class Recipe
 
     #[ORM\Column(length: 255)]
     private ?string $Image = null;
+
+    #[ORM\ManyToOne(inversedBy: 'recipes')]
+    private ?User $User = null;
 
     public function getId(): ?int
     {
@@ -42,18 +42,6 @@ class Recipe
     public function setName(string $Name): static
     {
         $this->Name = $Name;
-
-        return $this;
-    }
-
-    public function getText(): ?string
-    {
-        return $this->Text;
-    }
-
-    public function setText(string $Text): static
-    {
-        $this->Text = $Text;
 
         return $this;
     }
@@ -90,6 +78,18 @@ class Recipe
     public function setImage(string $Image): self
     {
         $this->Image = $Image;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): static
+    {
+        $this->User = $User;
 
         return $this;
     }

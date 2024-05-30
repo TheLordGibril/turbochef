@@ -32,6 +32,9 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $recipe->setUser($this->getUser());
+
             /** @var UploadedFile $Image */
             $Image = $form->get('Image')->getData();
 

@@ -16,10 +16,6 @@
                 <td>{{ recipe.Name }}</td>
             </tr>
             <tr>
-                <th>Text</th>
-                <td>{{ recipe.Text }}</td>
-            </tr>
-            <tr>
                 <th>Duration</th>
                 <td>{{ recipe.Duration}}</td>
             </tr>
@@ -30,6 +26,10 @@
             <tr>
                 <th>Image</th>
                 <td><img src={{ asset('uploads/images/' ~ recipe.getImage()) }} style="height:48px"></img></td>
+            </tr>
+            <tr>
+                <th>User</th>
+                <td>{{ recipe.User }}</td>
             </tr>
         </tbody>
     </table>
