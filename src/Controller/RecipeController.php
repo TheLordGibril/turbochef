@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/recipe')]
@@ -103,6 +104,11 @@ class RecipeController extends AbstractController
     #[Route('/{id}/edit', name: 'app_recipe_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Recipe $recipe, EntityManagerInterface $entityManager): Response
     {
+
+        if ($recipe->getUser() !== $this->getUser()) {
+            throw new AccessDeniedException('You do not have permission to edit this recipe.');
+        }
+
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
@@ -121,7 +127,19 @@ class RecipeController extends AbstractController
     #[Route('/{id}', name: 'app_recipe_delete', methods: ['POST'])]
     public function delete(Request $request, Recipe $recipe, EntityManagerInterface $entityManager): Response
     {
+
+        if ($recipe->getUser() !== $this->getUser()) {
+            throw new AccessDeniedException('You do not have permission to delete this recipe.');
+        }
+
         if ($this->isCsrfTokenValid('delete' . $recipe->getId(), $request->getPayload()->get('_token'))) {
+            foreach ($recipe->getIngredients() as $ingredient) {
+                $recipe->removeIngredient($ingredient);
+            }
+            foreach ($recipe->getComments() as $comment) {
+                $recipe->removeComment($comment);
+            }
+
             $entityManager->remove($recipe);
             $entityManager->flush();
         }

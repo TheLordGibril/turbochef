@@ -38,7 +38,9 @@
                 <td>{{ recipe.User }}</td>
             <tr>
                 <th>Image</th>
-                <td>{{ recipe.Image }}</td>
+                <td>
+                    <img src={{asset('uploads/images/'~recipe.getImage())}} style="height:16px"></img>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -57,6 +59,7 @@
     {{ form_start(comment_form) }}
     {{ form_widget(comment_form) }}
     <button type="submit">Add Comment</button>
+    {{ form_end(comment_form) }}
 
     <a href="{{ path('app_recipe_index') }}">back to list</a>
 
