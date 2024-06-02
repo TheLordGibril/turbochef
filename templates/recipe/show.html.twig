@@ -30,7 +30,9 @@
             <tr>
                 <th>Ingredients</th>
                 {% for ingredient in recipe.Ingredients %}
-                <td>{{ ingredient.name }}</td>
+                <td>
+                <a href={{ '/ingredient/'~ingredient.id }}>{{ ingredient.name }}</a>
+                </td>
                 {% endfor %}
             </tr>
             <tr>
