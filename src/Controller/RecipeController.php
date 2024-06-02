@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Recipe;
+use App\Form\CommentType;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -77,11 +79,24 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_recipe_show', methods: ['GET'])]
-    public function show(Recipe $recipe): Response
+    #[Route('/{id}', name: 'app_recipe_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, Recipe $recipe, EntityManagerInterface $entityManager): Response
     {
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentType::class, $comment);
+        $commentForm->handleRequest($request);
+
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment->setRecipe($recipe);
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_recipe_show', ['id' => $recipe->getId()]);
+        }
+
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
+            'comment_form' => $commentForm->createView(),
         ]);
     }
 

@@ -20,6 +20,14 @@ class Comment
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $Date = null;
 
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    private ?Recipe $recipe = null;
+
+    public function __construct()
+    {
+        $this->Date = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +53,18 @@ class Comment
     public function setDate(\DateTimeInterface $Date): static
     {
         $this->Date = $Date;
+
+        return $this;
+    }
+
+    public function getRecipe(): ?Recipe
+    {
+        return $this->recipe;
+    }
+
+    public function setRecipe(?Recipe $recipe): static
+    {
+        $this->recipe = $recipe;
 
         return $this;
     }

@@ -43,6 +43,21 @@
         </tbody>
     </table>
 
+    <h2>Comments</h2>
+    <ul>
+        {% for comment in recipe.comments %}
+            <li>{{ comment.Text }} - {{ comment.Date|date('Y-m-d H:i') }}</li>
+        {% else %}
+            <li>No comments yet.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Add a comment</h3>
+    
+    {{ form_start(comment_form) }}
+    {{ form_widget(comment_form) }}
+    <button type="submit">Add Comment</button>
+
     <a href="{{ path('app_recipe_index') }}">back to list</a>
 
     <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
