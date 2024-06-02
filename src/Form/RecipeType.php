@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
+use App\Entity\Ingredient;
 use App\Entity\Recipe;
-use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -17,9 +17,9 @@ class RecipeType extends AbstractType
     {
         $builder
             ->add('Name')
+            ->add('Description')
             ->add('Duration')
             ->add('Persons')
-            ->add('ingredients', SearchableEntityType::class, ['class' => User::class])
             ->add('Image', FileType::class, [
                 'label' => 'Image (JPG, PNG files)',
 
@@ -42,6 +42,14 @@ class RecipeType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid image file',
                     ])
                 ],
+            ])
+            ->add('ingredients', EntityType::class, [
+                'class' => Ingredient::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true,
+                'mapped' => true,
+                'by_reference' => false,
             ]);
     }
 

@@ -10,12 +10,11 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Ingredients</th>
+                <th>Description</th>
                 <th>Duration</th>
                 <th>Persons</th>
                 <th>Image</th>
                 <th>actions</th>
-                <th>User</th>
             </tr>
         </thead>
         <tbody>
@@ -23,14 +22,16 @@
             <tr>
                 <td>{{ recipe.id }}</td>
                 <td>{{ recipe.Name }}</td>
-                <td>{{ recipe.Duration}}</td>
+                <td>{{ recipe.Description }}</td>
+                <td>{{ recipe.Duration }}</td>
                 <td>{{ recipe.Persons }}</td>
-                <td><img src={{ asset('uploads/images/' ~ recipe.getImage()) }} style="height:12px"></img></td>
+                <td>
+                    <img src={{asset('uploads/images/'~recipe.getImage())}} style="height:16px"></img>
+                </td>
                 <td>
                     <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">show</a>
                     <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
                 </td>
-                <td>{{ recipe.User }}</td>
             </tr>
         {% else %}
             <tr>

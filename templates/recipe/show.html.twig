@@ -16,20 +16,29 @@
                 <td>{{ recipe.Name }}</td>
             </tr>
             <tr>
+                <th>Description</th>
+                <td>{{ recipe.Description }}</td>
+            </tr>
+            <tr>
                 <th>Duration</th>
-                <td>{{ recipe.Duration}}</td>
+                <td>{{ recipe.Duration }}</td>
             </tr>
             <tr>
                 <th>Persons</th>
                 <td>{{ recipe.Persons }}</td>
             </tr>
             <tr>
-                <th>Image</th>
-                <td><img src={{ asset('uploads/images/' ~ recipe.getImage()) }} style="height:48px"></img></td>
+                <th>Ingredients</th>
+                {% for ingredient in recipe.Ingredients %}
+                <td>{{ ingredient.name }}</td>
+                {% endfor %}
             </tr>
             <tr>
-                <th>User</th>
+                <th>Utilisateur</th>
                 <td>{{ recipe.User }}</td>
+            <tr>
+                <th>Image</th>
+                <td>{{ recipe.Image }}</td>
             </tr>
         </tbody>
     </table>

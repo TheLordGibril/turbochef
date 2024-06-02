@@ -122,6 +122,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    public function __toString()
+    {
+        return $this->email;
+    }
+
     /**
      * @return Collection<int, Recipe>
      */
@@ -150,10 +155,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->email;
     }
 }
